@@ -1,0 +1,82 @@
+[
+	{
+		"transactionId": "T001",
+		"customerId": "C01",
+		"customerName": "Anna Johnson",
+		"purchaseDate": "2023-12-20",
+		"product": "Premium Router",
+		"price": 120.4
+	},
+	{
+		"transactionId": "T002",
+		"customerId": "C01",
+		"customerName": "Anna Johnson",
+		"purchaseDate": "2024-01-08",
+		"product": "Service Pack",
+		"price": 85.5
+	},
+	{
+		"transactionId": "T003",
+		"customerId": "C01",
+		"customerName": "Anna Johnson",
+		"purchaseDate": "2024-02-14",
+		"product": "Gigabit Plan",
+		"price": 45.2
+	},
+	{
+		"transactionId": "T004",
+		"customerId": "C02",
+		"customerName": "Ben Patel",
+		"purchaseDate": "2023-12-27",
+		"product": "Modem",
+		"price": 99.9
+	},
+	{
+		"transactionId": "T005",
+		"customerId": "C02",
+		"customerName": "Ben Patel",
+		"purchaseDate": "2024-01-18",
+		"product": "TV Bundle",
+		"price": 150.0
+	},
+	{
+		"transactionId": "T006",
+		"customerId": "C03",
+		"customerName": "Carla West",
+		"purchaseDate": "2024-01-21",
+		"product": "Router Pro",
+		"price": 210.8
+	},
+	{
+		"transactionId": "T007",
+		"customerId": "C03",
+		"customerName": "Carla West",
+		"purchaseDate": "2024-02-05",
+		"product": "Premium Channel",
+		"price": 55.1
+	},
+	{
+		"transactionId": "T008",
+		"customerId": "C04",
+		"customerName": "David Lee",
+		"purchaseDate": "2024-02-19",
+		"product": "New Plan",
+		"price": 112.35
+	},
+	{
+		"transactionId": "T009",
+		"customerId": "C05",
+		"customerName": "Eve Martin",
+		"purchaseDate": "2024-01-04",
+		"product": "Smart Home",
+		"price": 75.6
+	},
+	{
+		"transactionId": "T010",
+		"customerId": "C05",
+		"customerName": "Eve Martin",
+		"purchaseDate": "2024-02-28",
+		"product": "Device Kit",
+		"price": 160.0
+	}
+]
