@@ -8,8 +8,6 @@ export const APP_CONFIG = {
 export const ERROR_MESSAGES = {
   GENERIC_ERROR: "Something went wrong.",
   FETCH_TRANSACTIONS_FAILED: "Failed to fetch transactions.",
-  NETWORK_ERROR: "Network error. Please check your connection.",
-  DATA_PROCESSING_ERROR: "Unable to process transaction data.",
 };
 
 // Table config
