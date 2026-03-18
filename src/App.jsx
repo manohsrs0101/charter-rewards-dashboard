@@ -22,12 +22,13 @@ import { ERROR_MESSAGES, UI_TEXT } from "./constants/constants";
  */
 export default function App() {
   const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const loadTransactions = async () => {
       try {
+        setLoading(true)
         const data = await fetchTransactions();
         logger.info(UI_TEXT.TRANSACTIONS_LOADED_SUCCESSFULLY);
         setTransactions(data);
