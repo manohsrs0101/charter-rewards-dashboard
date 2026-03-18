@@ -33,7 +33,7 @@ export default function App() {
         logger.info(UI_TEXT.TRANSACTIONS_LOADED_SUCCESSFULLY);
         setTransactions(data);
       } catch (err) {
-        logger.error(err?.message);
+        logger.error(err?.message || ERROR_MESSAGES.FETCH_TRANSACTIONS_FAILED);
         setError(err?.message || ERROR_MESSAGES.FETCH_TRANSACTIONS_FAILED);
       } finally {
         setLoading(false);
