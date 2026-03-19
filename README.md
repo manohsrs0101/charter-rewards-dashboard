@@ -35,6 +35,9 @@ It provides a dashboard with:
 ```
 src
 │
+├ assets
+│   └ demo.gif
+│
 ├ components
 │   └ common
 │       ├ Card
@@ -62,8 +65,11 @@ src
 │   └ logger.js
 │
 ├ __tests__
+│   ├ App.test.js
+│   ├ Table.test.js
 │   ├ rewardsServices.test.js
-│   └ tableUtils.test.js
+│   ├ tableUtils.test.js
+│   └ useFetch.test.js
 │
 ├ App.js
 └ index.js
