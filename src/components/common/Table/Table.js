@@ -85,6 +85,7 @@ function Table({
 
   return (
     <div className="table-container">
+      {tableTitle && <div className="table-title">{tableTitle}</div>}
       <TableControls
         canSearch={canSearch}
         onRowsPerPageChange={setRowsPerPageHandler}
@@ -167,6 +168,7 @@ Table.propTypes = {
   canSearch: PropTypes.bool,
   defaultRowsPerPage: PropTypes.number,
   rowsPerPageOptions: PropTypes.arrayOf(PropTypes.number),
+  tableTitle:PropTypes.string
 };
 
 export default memo(Table);

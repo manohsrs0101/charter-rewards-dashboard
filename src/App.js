@@ -1,7 +1,8 @@
 import { fetchTransactions } from "./services/api";
 import {
+  addRewardPointsToTransactions,
   calculateMonthlyRewardsForCustomers,
-  calculateTotalRewardsForCustomers,
+  calculateTotalRewardsForCustomers
 } from "./utils/rewardsService";
 import Card from "./components/common/Card/Card";
 import Loader from "./components/common/Loader/Loader";
@@ -9,9 +10,49 @@ import ErrorMessage from "./components/common/ErrorMessage/ErrorMessage";
 import "./styles/global.css";
 import { TABLE_CONFIG, UI_TEXT } from "./constants/constants";
 import useFetch from "./hooks/useFetch";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Table from "./components/common/Table/Table";
 
+
+const TABLE_BASE_CONFIG = {
+  canSearch: true,
+  defaultRowsPerPage: 10,
+  rowsPerPageOptions: TABLE_CONFIG.DEFAULT_ROWS_PER_PAGE_OPTIONS,
+}
+
+const TABLE_VIEWS = {
+  transactions: {
+    tableTitle : TABLE_CONFIG.TABLE_TITLE_TRANSACTIONS,
+    columns : [
+      { key: "transactionId", header: "Transaction ID" },
+      { key: "customerName", header: "Customer Name", sortable: true },
+      { key: "purchaseDate", header: "Purchase Date", sortable: true },
+      { key: "product", header: "Product Purchased" },
+      { key: "price", header: "Price", sortable: true },
+      { key: "rewardPoints", header: "Reward Points", sortable: true },
+    ],
+    rowsMap: addRewardPointsToTransactions
+  },
+  monthlyRewards: {
+    tableTitle : TABLE_CONFIG.TABLE_TITLE_MONTHLY_REWARDS,
+    columns : [
+      { key: "customerId", header: "Customer ID" },
+      { key: "customerName", header: "Name" },
+      { key: "month", header: "Month", sortable: true },
+      { key: "year", header: "Year", sortable: true },
+      { key: "rewardPoints", header: "Reward Points", sortable: true },
+    ],
+    rowsMap: calculateMonthlyRewardsForCustomers
+  },
+  totalRewards: {
+    tableTitle : TABLE_CONFIG.TABLE_TITLE_TOTAL_REWARDS,
+    columns : [
+      { key: "customerName", header: "Customer Name", sortable: true },
+      { key: "rewardPoints", header: "Total Reward Points", sortable: true },
+    ],
+    rowsMap: calculateTotalRewardsForCustomers
+  }
+}
 /**
  * App root component.
  *
@@ -25,6 +66,21 @@ import Table from "./components/common/Table/Table";
 export default function App() {
   const [view, setView] = useState("transactions");
   const { data: transactions, loading, error } = useFetch(fetchTransactions);
+ 
+  const { tableTitle, columns, rowsMap } = TABLE_VIEWS[view]
+  
+  const rows = useMemo(() => {
+    return rowsMap(transactions)
+  }, [transactions, rowsMap])
+
+  const tableProps = useMemo(() => {
+    return {
+      ...TABLE_BASE_CONFIG,
+      tableTitle,
+      columns,
+      rows
+    }
+  }, [columns, rows])
 
   if (loading) {
     return (
@@ -33,7 +89,6 @@ export default function App() {
       </Card>
     );
   }
-
   if (error) {
     return (
       <Card>
@@ -41,41 +96,7 @@ export default function App() {
       </Card>
     );
   }
-  const tableConfig = {
-    canSearch: true,
-    defaultRowsPerPage: 10,
-    rowsPerPageOptions: TABLE_CONFIG.DEFAULT_ROWS_PER_PAGE_OPTIONS,
-  };
-
-  if (view === "transactions") {
-    tableConfig.rows = transactions;
-    tableConfig.columns = [
-      { key: "transactionId", header: "Transaction ID" },
-      { key: "customerName", header: "Customer Name", sortable: true },
-      { key: "purchaseDate", header: "Purchase Date", sortable: true },
-      { key: "product", header: "Product Purchased" },
-      { key: "price", header: "Price", sortable: true },
-      { key: "rewardPoints", header: "Reward Points", sortable: true },
-    ];
-  }
-
-  if (view === "monthly") {
-    tableConfig.rows = calculateMonthlyRewardsForCustomers(transactions);
-    tableConfig.columns = [
-      { key: "customerId", header: "Customer ID" },
-      { key: "customerName", header: "Name" },
-      { key: "month", header: "Month", sortable: true },
-      { key: "year", header: "Year", sortable: true },
-      { key: "rewardPoints", header: "Reward Points", sortable: true },
-    ];
-  }
-  if (view === "total") {
-    tableConfig.rows = calculateTotalRewardsForCustomers(transactions);
-    tableConfig.columns = [
-      { key: "customerName", header: "Customer Name", sortable: true },
-      { key: "rewardPoints", header: "Total Reward Points", sortable: true },
-    ];
-  }
+ 
   return (
     <div className="app-container">
       <header className="app-header">
@@ -86,13 +107,13 @@ export default function App() {
           onChange={(e) => setView(e.target.value)}
         >
           <option value="transactions">Transactions</option>
-          <option value="monthly">Monthly Rewards</option>
-          <option value="total">Total Rewards</option>
+          <option value="monthlyRewards">Monthly Rewards</option>
+          <option value="totalRewards">Total Rewards</option>
         </select>
       </header>
       <div className="app-content">
         <Card>
-          <Table {...tableConfig} />
+          <Table {...tableProps} />
         </Card>
       </div>
     </div>
