@@ -7,6 +7,32 @@ import {
 
 describe("rewardsServices", () => {
   describe("addRewardPointsToTransactions", () => {
+    it("returns empty array for non-array input", () => {
+      expect(addRewardPointsToTransactions(null)).toEqual([]);
+      expect(addRewardPointsToTransactions(undefined)).toEqual([]);
+      expect(addRewardPointsToTransactions({})).toEqual([]);
+    });
+
+    it("handles missing purchaseDate gracefully", () => {
+      const input = [
+        {
+          transactionId: "T1",
+          customerId: "C1",
+          customerName: "Test",
+          purchaseDate: null,
+          price: 120,
+        },
+      ];
+      const result = addRewardPointsToTransactions(input);
+      expect(result[0].purchaseDate).toBe("");
+      expect(result[0].rewardPoints).toBe(90);
+    });
+
+    it("returns 0 reward points for invalid price", () => {
+      expect(calculateRewardPointsForTransactions(null)).toBe(0);
+      expect(calculateRewardPointsForTransactions(undefined)).toBe(0);
+      expect(calculateRewardPointsForTransactions("abc")).toBe(0);
+    });
     it("returns empty array when no transactions", () => {
       const result = addRewardPointsToTransactions([]);
       expect(result).toEqual([]);
@@ -86,6 +112,11 @@ describe("rewardsServices", () => {
   });
 
   describe("calculateMonthlyRewardsForCustomers", () => {
+    it("returns empty array for non-array input", () => {
+      expect(calculateMonthlyRewardsForCustomers(null)).toEqual([]);
+      expect(calculateMonthlyRewardsForCustomers(undefined)).toEqual([]);
+    });
+
     it("returns empty array when no transactions", () => {
       const result = calculateMonthlyRewardsForCustomers([]);
       expect(result).toEqual([]);
@@ -216,6 +247,10 @@ describe("rewardsServices", () => {
   });
 
   describe("calculateRewardPointsForTransactions", () => {
+    it("handles numeric string values", () => {
+      expect(calculateRewardPointsForTransactions("120")).toBe(90);
+    });
+
     it("returns 0 for amounts <= 50", () => {
       expect(calculateRewardPointsForTransactions(0)).toBe(0);
       expect(calculateRewardPointsForTransactions(50)).toBe(0);
@@ -241,15 +276,20 @@ describe("rewardsServices", () => {
   });
 
   describe("calculateTotalRewardsForCustomers", () => {
+    it("returns empty array for non-array input", () => {
+      expect(calculateTotalRewardsForCustomers(null)).toEqual([]);
+      expect(calculateTotalRewardsForCustomers(undefined)).toEqual([]);
+    });
+
     it("returns empty array with no transactions", () => {
       expect(calculateTotalRewardsForCustomers([])).toEqual([]);
     });
 
     it("aggregates rewardPoints by customerId", () => {
       const transactions = [
-        { customerId: "CUST-1", customerName: "Alice", rewardPoints: 10 },
-        { customerId: "CUST-2", customerName: "Bob", rewardPoints: 20 },
-        { customerId: "CUST-1", customerName: "Alice", rewardPoints: 15 },
+        { customerId: "CUST-1", customerName: "Alice", price: 60 },
+        { customerId: "CUST-2", customerName: "Bob", price: 70 },
+        { customerId: "CUST-1", customerName: "Alice", price: 65 },
       ];
 
       const result = calculateTotalRewardsForCustomers(transactions);

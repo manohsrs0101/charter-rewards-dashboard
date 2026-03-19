@@ -2,7 +2,7 @@ import { fetchTransactions } from "./services/api";
 import {
   addRewardPointsToTransactions,
   calculateMonthlyRewardsForCustomers,
-  calculateTotalRewardsForCustomers
+  calculateTotalRewardsForCustomers,
 } from "./utils/rewardsService";
 import Card from "./components/common/Card/Card";
 import Loader from "./components/common/Loader/Loader";
@@ -13,17 +13,16 @@ import useFetch from "./hooks/useFetch";
 import { useState, useMemo } from "react";
 import Table from "./components/common/Table/Table";
 
-
 const TABLE_BASE_CONFIG = {
   canSearch: true,
   defaultRowsPerPage: 10,
   rowsPerPageOptions: TABLE_CONFIG.DEFAULT_ROWS_PER_PAGE_OPTIONS,
-}
+};
 
 const TABLE_VIEWS = {
   transactions: {
-    tableTitle : TABLE_CONFIG.TABLE_TITLE_TRANSACTIONS,
-    columns : [
+    tableTitle: UI_TEXT.TABLE_TITLE_TRANSACTIONS,
+    columns: [
       { key: "transactionId", header: "Transaction ID" },
       { key: "customerName", header: "Customer Name", sortable: true },
       { key: "purchaseDate", header: "Purchase Date", sortable: true },
@@ -31,28 +30,29 @@ const TABLE_VIEWS = {
       { key: "price", header: "Price", sortable: true },
       { key: "rewardPoints", header: "Reward Points", sortable: true },
     ],
-    rowsMap: addRewardPointsToTransactions
+    rowsMap: addRewardPointsToTransactions,
   },
   monthlyRewards: {
-    tableTitle : TABLE_CONFIG.TABLE_TITLE_MONTHLY_REWARDS,
-    columns : [
+    tableTitle: UI_TEXT.TABLE_TITLE_MONTHLY_REWARDS,
+    columns: [
       { key: "customerId", header: "Customer ID" },
       { key: "customerName", header: "Name" },
       { key: "month", header: "Month", sortable: true },
       { key: "year", header: "Year", sortable: true },
       { key: "rewardPoints", header: "Reward Points", sortable: true },
     ],
-    rowsMap: calculateMonthlyRewardsForCustomers
+    rowsMap: calculateMonthlyRewardsForCustomers,
   },
   totalRewards: {
-    tableTitle : TABLE_CONFIG.TABLE_TITLE_TOTAL_REWARDS,
-    columns : [
+    tableTitle: UI_TEXT.TABLE_TITLE_TOTAL_REWARDS,
+    columns: [
       { key: "customerName", header: "Customer Name", sortable: true },
       { key: "rewardPoints", header: "Total Reward Points", sortable: true },
     ],
-    rowsMap: calculateTotalRewardsForCustomers
-  }
-}
+    rowsMap: calculateTotalRewardsForCustomers,
+  },
+};
+
 /**
  * App root component.
  *
@@ -66,21 +66,21 @@ const TABLE_VIEWS = {
 export default function App() {
   const [view, setView] = useState("transactions");
   const { data: transactions, loading, error } = useFetch(fetchTransactions);
- 
-  const { tableTitle, columns, rowsMap } = TABLE_VIEWS[view]
-  
+
+  const { tableTitle, columns, rowsMap } = TABLE_VIEWS[view];
+
   const rows = useMemo(() => {
-    return rowsMap(transactions)
-  }, [transactions, rowsMap])
+    return rowsMap(transactions);
+  }, [transactions, rowsMap]);
 
   const tableProps = useMemo(() => {
     return {
       ...TABLE_BASE_CONFIG,
       tableTitle,
       columns,
-      rows
-    }
-  }, [columns, rows])
+      rows,
+    };
+  }, [columns, rows, tableTitle]);
 
   if (loading) {
     return (
@@ -96,24 +96,27 @@ export default function App() {
       </Card>
     );
   }
- 
+
   return (
     <div className="app-container">
       <header className="app-header">
         <h1>{UI_TEXT.DASHBOARD_TITLE}</h1>
-        <select
-          className="view-dropdown"
-          value={view}
-          onChange={(e) => setView(e.target.value)}
-        >
-          <option value="transactions">Transactions</option>
-          <option value="monthlyRewards">Monthly Rewards</option>
-          <option value="totalRewards">Total Rewards</option>
-        </select>
+        <div className="table-view-selector">
+          <label htmlFor="view-dropdown">Select View:</label>
+          <select
+            id="view-dropdown"
+            value={view}
+            onChange={(e) => setView(e.target.value)}
+          >
+            <option value="transactions">Transactions</option>
+            <option value="monthlyRewards">Monthly Rewards</option>
+            <option value="totalRewards">Total Rewards</option>
+          </select>
+        </div>
       </header>
       <div className="app-content">
         <Card>
-          <Table {...tableProps} />
+          <Table key={view} {...tableProps} />
         </Card>
       </div>
     </div>

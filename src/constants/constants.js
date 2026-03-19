@@ -4,6 +4,11 @@ export const APP_CONFIG = {
   SEARCH_DEBOUNCE_TIME: 300,
 };
 
+// API endpoints
+export const API_ENDPOINTS = {
+  TRANSACTIONS_API_ENDPOINT: "/transactions",
+};
+
 // Error messages
 export const ERROR_MESSAGES = {
   GENERIC_ERROR: "Something went wrong.",
@@ -14,8 +19,7 @@ export const ERROR_MESSAGES = {
 // Table config
 export const TABLE_CONFIG = {
   DEFAULT_ROWS_PER_PAGE: 10,
-  DEFAULT_ROWS_PER_PAGE_OPTIONS: [10, 25, 50],
-  DEFAULT_SORT_ORDER: "asc",
+  DEFAULT_ROWS_PER_PAGE_OPTIONS: [5, 10, 20, 50],
   SORT_ORDER_ASCENDING: "asc",
   SORT_ORDER_DESCENDING: "desc",
   NO_DATA: "No data to show",
@@ -34,7 +38,6 @@ export const UI_TEXT = {
 
 // Constants for transactions API calls
 export const TRANSACTIONS_API_MESSAGES = {
-  TRANSACTIONS_API_ENDPOINT: "/transactions",
   TRANSACTIONS_FETCHING_MSG: "Fetching transactions...",
   TRANSACTIONS_FETCHED_SUCCESSFULLY: "Transactions fetched successfully!",
   TRANSACTIONS_FETCH_FAILED: "Failed to fetch transactions.",

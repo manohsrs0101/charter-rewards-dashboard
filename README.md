@@ -28,9 +28,7 @@ It provides a dashboard with:
 
 ## Demo
 
-![dashboard](src/assets/dashboard.gif)
-![table-features](src/assets/table-features.gif)
-![loading with failure](<src/assets/loading with failure.gif>)
+![Demo](src/assets/demo.gif)
 
 ## Project Structure
 
@@ -38,22 +36,19 @@ It provides a dashboard with:
 src
 │
 ├ components
-│   ├ common
-│   │   ├ Card
-│   │   ├ ErrorBoundary
-│   │   ├ ErrorMessage
-│   │   ├ Loader
-│   │   └ Table
-│   │
-│   ├ MonthlyRewardsTable.jsx
-│   ├ TotalRewardsTable.jsx
-│   └ TransactionsTable.jsx
+│   └ common
+│       ├ Card
+│       ├ ErrorBoundary
+│       ├ ErrorMessage
+│       ├ Loader
+│       └ Table
 │
 ├ constants
 │   └ constants.js
 │
 ├ hooks
-│   └ useDebounce.js
+│   ├ useDebounce.js
+│   └ useFetch.js
 │
 ├ services
 │   └ api.js
@@ -62,25 +57,15 @@ src
 │   └ global.css
 │
 ├ utils
-│   ├ calculateRewardPointsForTransactions.js
-│   ├ calculateMonthlyRewardsForCustomers.js
-│   ├ calculateTotalRewardsForCustomers.js
-│   ├ addRewardPointsToTransactions.js
-│   ├ filterRows.js
-│   ├ sortRows.js
-│   ├ paginateRows.js
-│   ├ logger.js
-│   └ index.js
+│   ├ rewardsService.js
+│   ├ tableUtils.js
+│   └ logger.js
 │
 ├ __tests__
-│   ├ rewardPoints.test.js
-│   ├ monthlyRewards.test.js
-│   ├ totalRewards.test.js
-│   ├ sortRows.test.js
-│   ├ filterRows.test.js
-│   └ paginateRows.test.js
+│   ├ rewardsServices.test.js
+│   └ tableUtils.test.js
 │
-├ App.jsx
+├ App.js
 └ index.js
 ```
 

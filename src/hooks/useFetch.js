@@ -16,18 +16,25 @@ export default function useFetch(fetcher) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    let ignore = false;
+
     const fetchData = async () => {
       try {
         setLoading(true);
         const result = await fetcher();
-        setData(result);
+        if (!ignore) setData(result);
       } catch (err) {
-        setError(err?.message || ERROR_MESSAGES.GENERIC_ERROR);
+        if (!ignore) setError(err?.message || ERROR_MESSAGES.GENERIC_ERROR);
       } finally {
-        setLoading(false);
+        if (!ignore) setLoading(false);
       }
     };
+
     fetchData();
+
+    return () => {
+      ignore = true;
+    };
   }, [fetcher]);
 
   return { data, loading, error };

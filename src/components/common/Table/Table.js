@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { memo, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import TablePagination from "./TablePagination";
 import TableControls from "./TableControls";
 import useDebounce from "../../../hooks/useDebounce";
@@ -168,7 +168,7 @@ Table.propTypes = {
   canSearch: PropTypes.bool,
   defaultRowsPerPage: PropTypes.number,
   rowsPerPageOptions: PropTypes.arrayOf(PropTypes.number),
-  tableTitle:PropTypes.string
+  tableTitle: PropTypes.string,
 };
 
-export default memo(Table);
+export default Table;

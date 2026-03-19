@@ -1,4 +1,8 @@
-import { APP_CONFIG, TRANSACTIONS_API_MESSAGES } from "../constants/constants";
+import {
+  APP_CONFIG,
+  TRANSACTIONS_API_MESSAGES,
+  API_ENDPOINTS,
+} from "../constants/constants";
 import { logger } from "../utils/logger";
 
 /**
@@ -12,7 +16,7 @@ import { logger } from "../utils/logger";
 export const fetchTransactions = async () => {
   logger.info(TRANSACTIONS_API_MESSAGES.TRANSACTIONS_FETCHING_MSG);
   const response = await fetch(
-    `${APP_CONFIG.SERVER_BASE_URL}${TRANSACTIONS_API_MESSAGES.TRANSACTIONS_API_ENDPOINT}`,
+    `${APP_CONFIG.SERVER_BASE_URL}${API_ENDPOINTS.TRANSACTIONS_API_ENDPOINT}`,
   );
   if (!response.ok) {
     const errorMessage = TRANSACTIONS_API_MESSAGES.TRANSACTIONS_FETCH_FAILED;

@@ -42,6 +42,21 @@ describe("table helper utilities", () => {
       );
       expect(sorted.map((r) => r.amount)).toEqual([120, 80, 50, 30]);
     });
+
+    it("returns 0 for rows with equal values and keeps a new array", () => {
+      const duplicateRows = [
+        { id: 1, amount: 100 },
+        { id: 2, amount: 100 },
+      ];
+
+      const sorted = sortRows(
+        { key: "amount", order: TABLE_CONFIG.SORT_ORDER_ASCENDING },
+        duplicateRows,
+      );
+
+      expect(sorted).not.toBe(duplicateRows);
+      expect(sorted).toEqual(duplicateRows);
+    });
   });
 
   describe("filterRows", () => {
@@ -57,6 +72,23 @@ describe("table helper utilities", () => {
     it("returns empty array when no match", () => {
       const filtered = filterRows(true, "zorro", rows, columns);
       expect(filtered).toEqual([]);
+    });
+
+    it("returns all rows for an empty trimmed query", () => {
+      const filtered = filterRows(true, "   ", rows, columns);
+      expect(filtered).toEqual(rows);
+    });
+
+    it("ignores null and undefined cell values while filtering", () => {
+      const nullableRows = [
+        { id: 1, name: null, amount: 50 },
+        { id: 2, name: undefined, amount: 75 },
+        { id: 3, name: "Bob", amount: 90 },
+      ];
+
+      const filtered = filterRows(true, "bob", nullableRows, columns);
+
+      expect(filtered).toEqual([nullableRows[2]]);
     });
   });
 

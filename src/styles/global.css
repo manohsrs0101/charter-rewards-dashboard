@@ -10,7 +10,7 @@ body {
   font-family: "Inter", sans-serif;
   background: #f4f6fb;
   color: #1f2937;
-  line-height: 1.4;
+  line-height: 1.3;
   font-size: 14px;
 }
 
@@ -37,9 +37,17 @@ body {
   margin: 10px 20px;
 }
 
-.view-dropdown {
-  font-size: 1em;
-  padding: 8px 12px;
-  border-radius: 5px;
+.table-view-selector {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+.table-view-selector select {
+  padding: 4px 6px;
+  border-radius: 4px;
+  padding: 5px 10px;
   border: 1px solid #ccc;
 }

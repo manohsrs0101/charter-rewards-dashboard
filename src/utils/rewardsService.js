@@ -10,22 +10,25 @@ export function addRewardPointsToTransactions(transactions) {
   const safeTransactions = Array.isArray(transactions) ? transactions : [];
   return safeTransactions.map((transaction) => ({
     ...transaction,
-    purchaseDate: transaction.purchaseDate.split("T")[0],
+    purchaseDate: transaction.purchaseDate?.split("T")[0] ?? "",
     rewardPoints: calculateRewardPointsForTransactions(transaction.price),
   }));
 }
+
 /**
  * Group transactions by customer and calendar month/year to compute monthly reward totals.
  *
- * @param {Array<Object>} transactions - transaction list with computed reward points.
+ * @param {Array<Object>} transactions - Raw transaction list.
  * @param {string} transactions[].customerId - unique customer id.
  * @param {string} transactions[].customerName - customer name.
  * @param {string} transactions[].purchaseDate - ISO transaction date string (e.g., '2024-06-15T12:00:00.000Z').
- * @param {number} transactions[].rewardPoints - reward points for the transaction.
+ * @param {number} transactions[].price - transaction price used to compute reward points.
  * @returns {Array<Object>} aggregated monthly reward records with: customerId, customerName, month, year, rewardPoints.
  */
 export function calculateMonthlyRewardsForCustomers(transactions) {
-  const rewardsMap = transactions.reduce((acc, transaction) => {
+  if (!Array.isArray(transactions)) return [];
+  const transactionsWithRewards = addRewardPointsToTransactions(transactions);
+  const rewardsMap = transactionsWithRewards.reduce((acc, transaction) => {
     const date = new Date(transaction.purchaseDate);
     const month = date.toLocaleString("default", { month: "long" });
     const year = date.getFullYear();
@@ -61,6 +64,7 @@ export function calculateMonthlyRewardsForCustomers(transactions) {
  */
 export function calculateRewardPointsForTransactions(price) {
   const amount = Math.floor(price);
+  if (isNaN(amount)) return 0;
   let points = 0;
   if (amount > 100) {
     points += 50;
@@ -70,28 +74,34 @@ export function calculateRewardPointsForTransactions(price) {
   }
   return points;
 }
+
 /**
  * Calculate aggregated total reward points per customer.
  *
- * @param {Array<Object>} transactions - transaction list with reward points.
+ * @param {Array<Object>} transactions - Raw transaction list.
  * @param {string} transactions[].customerId
  * @param {string} transactions[].customerName
- * @param {number} transactions[].rewardPoints
+ * @param {number} transactions[].price - transaction price used to compute reward points.
  * @returns {Array<Object>} list of customers with aggregated `rewardPoints`.
  */
 export function calculateTotalRewardsForCustomers(transactions) {
-  const totalRewardsForCustomer = transactions.reduce((acc, transaction) => {
-    const key = transaction.customerId;
-    if (!acc[key]) {
-      acc[key] = {
-        customerName: transaction.customerName,
-        rewardPoints: 0,
-      };
-    }
-    acc[key].rewardPoints = acc[key].rewardPoints + transaction.rewardPoints;
+  if (!Array.isArray(transactions)) return [];
+  const transactionsWithRewards = addRewardPointsToTransactions(transactions);
+  const totalRewardsForCustomer = transactionsWithRewards.reduce(
+    (acc, transaction) => {
+      const key = transaction.customerId;
+      if (!acc[key]) {
+        acc[key] = {
+          customerName: transaction.customerName,
+          rewardPoints: 0,
+        };
+      }
+      acc[key].rewardPoints = acc[key].rewardPoints + transaction.rewardPoints;
 
-    return acc;
-  }, {});
+      return acc;
+    },
+    {},
+  );
 
   return Object.values(totalRewardsForCustomer);
 }
