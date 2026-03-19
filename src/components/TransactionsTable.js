@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import Table from "./common/Table/Table";
 import { TABLE_CONFIG, UI_TEXT } from "../constants/constants";
-import { addRewardPointsToTransactions } from "../utils";
+import { addRewardPointsToTransactions } from "../utils/rewardsService";
 
 const columns = [
   { key: "transactionId", header: "Transaction ID" },

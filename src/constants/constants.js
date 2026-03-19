@@ -7,7 +7,8 @@ export const APP_CONFIG = {
 // Error messages
 export const ERROR_MESSAGES = {
   GENERIC_ERROR: "Something went wrong.",
-  FETCH_TRANSACTIONS_FAILED: "Failed to fetch transactions.",
+  COMPONENT_RENDER_ERROR:
+    "Something went wrong while rendering this component.",
 };
 
 // Table config
@@ -29,4 +30,12 @@ export const UI_TEXT = {
   TABLE_TITLE_TOTAL_REWARDS: "Total Rewards",
   TABLE_TITLE_MONTHLY_REWARDS: "Monthly Rewards",
   LOADING_MESSAGE: "Loading...",
+};
+
+// Constants for transactions API calls
+export const TRANSACTIONS_API_MESSAGES = {
+  TRANSACTIONS_API_ENDPOINT: "/transactions",
+  TRANSACTIONS_FETCHING_MSG: "Fetching transactions...",
+  TRANSACTIONS_FETCHED_SUCCESSFULLY: "Transactions fetched successfully!",
+  TRANSACTIONS_FETCH_FAILED: "Failed to fetch transactions.",
 };

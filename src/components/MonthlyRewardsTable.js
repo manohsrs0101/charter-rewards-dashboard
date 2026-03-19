@@ -4,7 +4,7 @@ import { TABLE_CONFIG, UI_TEXT } from "../constants/constants";
 import {
   addRewardPointsToTransactions,
   calculateMonthlyRewardsForCustomers,
-} from "../utils";
+} from "../utils/rewardsService";
 
 const columns = [
   { key: "customerId", header: "Customer ID" },

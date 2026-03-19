@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import { ERROR_MESSAGES } from "../../../constants/constants";
+import { logger } from "../../../utils/logger";
 /**
  * React ErrorBoundary component to catch render errors in child subtree.
  *
@@ -23,12 +24,12 @@ class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error("Error caught by boundary:", error, errorInfo);
+    logger.error("Error caught by boundary:", error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
-      return <div>Something went wrong while rendering this component.</div>;
+      return <div>{ERROR_MESSAGES.COMPONENT_RENDER_ERROR}</div>;
     }
 
     return this.props.children;

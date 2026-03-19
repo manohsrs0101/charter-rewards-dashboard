@@ -28,9 +28,9 @@ It provides a dashboard with:
 
 ## Demo
 
-![dashboard](docs/dashboard.gif)
-![table-features](docs/table-features.gif)
-![loading with failure](<docs/loading with failure.gif>)
+![dashboard](src/assets/dashboard.gif)
+![table-features](src/assets/table-features.gif)
+![loading with failure](<src/assets/loading with failure.gif>)
 
 ## Project Structure
 

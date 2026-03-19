@@ -4,7 +4,7 @@ import { UI_TEXT } from "../constants/constants";
 import {
   addRewardPointsToTransactions,
   calculateTotalRewardsForCustomers,
-} from "../utils";
+} from "../utils/rewardsService";
 
 const columns = [
   { key: "customerName", header: "Customer Name", sortable: true },

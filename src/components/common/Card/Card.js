@@ -1,3 +1,4 @@
+import { memo } from "react";
 import PropTypes from "prop-types";
 import "./Card.css";
 
@@ -8,10 +9,12 @@ import "./Card.css";
  * @param {React.ReactNode} props.children - content rendered inside the card
  * @returns {JSX.Element}
  */
-export default function Card({ children }) {
+const Card = ({ children }) => {
   return <div className="card">{children}</div>;
-}
+};
 
 Card.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+export default memo(Card);

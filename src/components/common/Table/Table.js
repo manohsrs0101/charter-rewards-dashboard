@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import TablePagination from "./TablePagination";
 import TableControls from "./TableControls";
 import useDebounce from "../../../hooks/useDebounce";
 import { APP_CONFIG, TABLE_CONFIG } from "../../../constants/constants";
-import { filterRows, sortRows, paginateRows } from "../../../utils";
+import { filterRows, sortRows, paginateRows } from "../../../utils/tableUtils";
 import "./Table.css";
 
 /**
@@ -19,7 +19,7 @@ import "./Table.css";
  * @param {string} [props.tableTitle=""]
  * @returns {JSX.Element}
  */
-export default function Table({
+function Table({
   columns = [],
   rows = [],
   canSearch = true,
@@ -85,7 +85,6 @@ export default function Table({
 
   return (
     <div className="table-container">
-      {tableTitle && <div className="table-title">{tableTitle}</div>}
       <TableControls
         canSearch={canSearch}
         onRowsPerPageChange={setRowsPerPageHandler}
@@ -168,5 +167,6 @@ Table.propTypes = {
   canSearch: PropTypes.bool,
   defaultRowsPerPage: PropTypes.number,
   rowsPerPageOptions: PropTypes.arrayOf(PropTypes.number),
-  tableTitle: PropTypes.string,
 };
+
+export default memo(Table);

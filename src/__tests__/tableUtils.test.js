@@ -1,6 +1,5 @@
-import { sortRows } from "../utils";
-import { filterRows } from "../utils";
-import { paginateRows } from "../utils";
+import { sortRows, filterRows, paginateRows } from "../utils/tableUtils";
+
 import { TABLE_CONFIG } from "../constants/constants";
 
 describe("table helper utilities", () => {

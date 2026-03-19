@@ -1,4 +1,5 @@
-import { APP_CONFIG, ERROR_MESSAGES } from "../constants/constants";
+import { APP_CONFIG, TRANSACTIONS_API_MESSAGES } from "../constants/constants";
+import { logger } from "../utils/logger";
 
 /**
  * Fetch transaction list from backend API.
@@ -9,9 +10,15 @@ import { APP_CONFIG, ERROR_MESSAGES } from "../constants/constants";
  * @throws {Error} when network response status is not ok
  */
 export const fetchTransactions = async () => {
-  const response = await fetch(`${APP_CONFIG.SERVER_BASE_URL}/transactions`);
+  logger.info(TRANSACTIONS_API_MESSAGES.TRANSACTIONS_FETCHING_MSG);
+  const response = await fetch(
+    `${APP_CONFIG.SERVER_BASE_URL}${TRANSACTIONS_API_MESSAGES.TRANSACTIONS_API_ENDPOINT}`,
+  );
   if (!response.ok) {
-    throw new Error(ERROR_MESSAGES.FETCH_TRANSACTIONS_FAILED);
+    const errorMessage = TRANSACTIONS_API_MESSAGES.TRANSACTIONS_FETCH_FAILED;
+    logger.error(errorMessage);
+    throw new Error(errorMessage);
   }
-  return response.json();
+  logger.info(TRANSACTIONS_API_MESSAGES.TRANSACTIONS_FETCHED_SUCCESSFULLY);
+  return await response.json();
 };
