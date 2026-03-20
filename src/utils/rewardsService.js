@@ -61,10 +61,21 @@ export function calculateMonthlyRewardsForCustomers(transactions) {
  *
  * @param {number} price - Transaction amount.
  * @returns {number} reward points for the transaction.
+ * @throws {Error} if price is null, undefined, or NaN.
  */
 export function calculateRewardPointsForTransactions(price) {
+  if (price === null || price === undefined || Number.isNaN(price)) {
+    throw new Error(
+      "Invalid transaction price: value is required and must be a valid number.",
+    );
+  }
+
   const amount = Math.floor(price);
-  if (isNaN(amount)) return 0;
+  if (Number.isNaN(amount)) {
+    throw new Error(
+      "Invalid transaction price: value must resolve to a valid number.",
+    );
+  }
   let points = 0;
   if (amount > 100) {
     points += 50;

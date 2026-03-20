@@ -28,10 +28,16 @@ describe("rewardsServices", () => {
       expect(result[0].rewardPoints).toBe(90);
     });
 
-    it("returns 0 reward points for invalid price", () => {
-      expect(calculateRewardPointsForTransactions(null)).toBe(0);
-      expect(calculateRewardPointsForTransactions(undefined)).toBe(0);
-      expect(calculateRewardPointsForTransactions("abc")).toBe(0);
+    it("throws for invalid price", () => {
+      expect(() => calculateRewardPointsForTransactions(null)).toThrow(
+        "Invalid transaction price",
+      );
+      expect(() => calculateRewardPointsForTransactions(undefined)).toThrow(
+        "Invalid transaction price",
+      );
+      expect(() => calculateRewardPointsForTransactions("abc")).toThrow(
+        "Invalid transaction price",
+      );
     });
     it("returns empty array when no transactions", () => {
       const result = addRewardPointsToTransactions([]);
