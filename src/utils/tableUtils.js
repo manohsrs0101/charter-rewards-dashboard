@@ -36,7 +36,8 @@ export function filterRows(canSearch, searchValue, rows, columns) {
   if (!canSearch) return rows;
   const query = searchValue.trim().toLowerCase();
   return rows.filter((row) => {
-    // Array some to only check if query existing in any column ignore other cols
+    // Keep rows where query text matches at least one field
+    // Array some to only check if query existing in any column ignore other cols if found earlier
     return columns.some((col) => {
       const cellValue = row[col.key];
       if (cellValue === null || cellValue === undefined) return false;

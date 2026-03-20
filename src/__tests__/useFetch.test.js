@@ -1,6 +1,5 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import useFetch from "../hooks/useFetch";
-import { ERROR_MESSAGES } from "../constants/constants";
 
 describe("useFetch", () => {
   it("returns fetched data on success", async () => {
@@ -30,6 +29,6 @@ describe("useFetch", () => {
     const { result } = renderHook(() => useFetch(fetcher));
 
     await waitFor(() => expect(result.current.loading).toBe(false));
-    expect(result.current.error).toBe(ERROR_MESSAGES.GENERIC_ERROR);
+    expect(result.current.error).toBe("Something went wrong.");
   });
 });
