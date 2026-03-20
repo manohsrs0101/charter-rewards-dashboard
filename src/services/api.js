@@ -1,8 +1,4 @@
-import {
-  APP_CONFIG,
-  TRANSACTIONS_API_MESSAGES,
-  API_ENDPOINTS,
-} from "../constants/constants";
+import { TRANSACTIONS_API_MESSAGES } from "../constants/constants";
 import { logger } from "../utils/logger";
 
 /**
@@ -15,14 +11,22 @@ import { logger } from "../utils/logger";
  */
 export const fetchTransactions = async () => {
   logger.info(TRANSACTIONS_API_MESSAGES.TRANSACTIONS_FETCHING_MSG);
-  const response = await fetch(
-    `${APP_CONFIG.SERVER_BASE_URL}${API_ENDPOINTS.TRANSACTIONS_API_ENDPOINT}`,
-  );
+  const response = await fetch("/mock-data.json");
   if (!response.ok) {
     const errorMessage = TRANSACTIONS_API_MESSAGES.TRANSACTIONS_FETCH_FAILED;
     logger.error(errorMessage);
     throw new Error(errorMessage);
   }
+
+  const payload = await response.json();
+  const transactions = Array.isArray(payload) ? payload : payload?.transactions;
+
+  if (!Array.isArray(transactions)) {
+    const errorMessage = TRANSACTIONS_API_MESSAGES.TRANSACTIONS_FETCH_FAILED;
+    logger.error(errorMessage);
+    throw new Error(errorMessage);
+  }
+
   logger.info(TRANSACTIONS_API_MESSAGES.TRANSACTIONS_FETCHED_SUCCESSFULLY);
-  return await response.json();
+  return transactions;
 };

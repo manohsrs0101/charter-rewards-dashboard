@@ -1,12 +1,6 @@
 // App config
 export const APP_CONFIG = {
-  SERVER_BASE_URL: "http://localhost:4000",
   SEARCH_DEBOUNCE_TIME: 300,
-};
-
-// API endpoints
-export const API_ENDPOINTS = {
-  TRANSACTIONS_API_ENDPOINT: "/transactions",
 };
 
 // Error messages
