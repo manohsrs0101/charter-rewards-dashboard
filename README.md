@@ -85,13 +85,7 @@ src
 npm install
 ```
 
-### 2. Start JSON Server (Mock API)
-
-```
-npm run server
-```
-
-### 3. Start the application
+### 2. Start the application
 
 ```
 npm run start
@@ -101,11 +95,7 @@ npm run start
 
 ## API
 
-The app uses a mock API via JSON Server:
-
-```
-GET /transactions
-```
+The app uses a mock API from public folder (http://localhost/mock-data.json)
 
 ---
 
